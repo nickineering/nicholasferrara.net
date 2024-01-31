@@ -1,4 +1,7 @@
 .container {
-  font-family: system-ui, sans-serif;
+  font-family: Tahoma, sans-serif;
   line-height: 1.8;
+  background-color: #0f0f0f;
+  color: #fff;
+  padding: 20px;
 }
