@@ -1,7 +1,14 @@
-.container {
+body {
   font-family: Tahoma, sans-serif;
   line-height: 1.8;
   background-color: #0f0f0f;
   color: #fff;
   padding: 20px;
+}
+
+.profile {
+  max-height: 500px;
+  height: auto;
+  border-radius: 10px;
+  box-shadow: 0 0 10px rgba(103, 103, 103, 0.6);
 }
