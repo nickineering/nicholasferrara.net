@@ -17,16 +17,20 @@ export default function Index() {
   return (
     <div className={styles.container}>
       <h1>Nicholas Ferrara - Software Engineer</h1>
-      <p>Hey, I&apos;m Nick 👋</p>
-      <p>
-        Ever since I was a teenager I&apos;ve been fascinated by what we can do
-        with code.
-      </p>
-      <img
-        src={profile}
-        alt="Nicholas Ferrara smiling in the sunset"
-        className={styles.profile}
-      />
+      <div className={styles.flexContainer}>
+        <div>
+          <p>Hey, I&apos;m Nick 👋</p>
+          <p>
+            Ever since I was a teenager I&apos;ve been fascinated by what we can
+            do with code.
+          </p>
+        </div>
+        <img
+          src={profile}
+          alt="Nicholas Ferrara smiling in the sunset"
+          className={styles.profile}
+        />
+      </div>
       <h2>
         Full stack polyglot senior software engineer focusing on process
         automation based in London, United Kingdom

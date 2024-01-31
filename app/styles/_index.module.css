@@ -6,6 +6,25 @@ body {
   padding: 20px;
 }
 
+.container {
+  max-width: 1000px;
+  margin: 0 auto;
+}
+
+.container h1 {
+  text-align: center;
+}
+
+.flexContainer {
+  display: flex;
+  align-items: start;
+  justify-content: space-between;
+}
+
+.flexContainer div {
+  margin-right: 20px;
+}
+
 .profile {
   max-height: 500px;
   height: auto;
