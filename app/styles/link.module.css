@@ -1,0 +1,22 @@
+.linkLogo {
+  display: inline-block;
+  height: 40px;
+  width: auto;
+  margin-right: 10px;
+  transition: transform 0.3s ease-in-out;
+}
+
+.linkLogo:hover {
+  transform: scale(1.1);
+}
+
+.socialLink {
+  display: flex;
+  align-items: center;
+  color: #fff;
+  font-weight: bold;
+  font-size: 1.2rem;
+  padding: 10px;
+  border-radius: 5px;
+  text-decoration: none;
+}

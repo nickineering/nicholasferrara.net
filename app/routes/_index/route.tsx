@@ -1,4 +1,7 @@
 import type { MetaFunction } from "@remix-run/cloudflare";
+import Github from "~/components/links/Github";
+import LeetCode from "~/components/links/LeetCode";
+import LinkedIn from "~/components/links/LinkedIn";
 import profile from "~/images/profile.jpg";
 import styles from "~/styles/_index.module.css";
 
@@ -35,9 +38,9 @@ export default function Index() {
         Full stack polyglot senior software engineer focusing on process
         automation based in London, United Kingdom
       </h2>
-      <a href="https://github.com/nickineering">Github</a>
-      <a href="https://www.linkedin.com/in/nicholasferrara/">LinkedIn</a>
-      <a href="https://leetcode.com/nickineering/">LeetCode</a>
+      <Github />
+      <LinkedIn />
+      <LeetCode />
       <p>Contact form - Bio - CV - Github projects</p>
     </div>
   );
