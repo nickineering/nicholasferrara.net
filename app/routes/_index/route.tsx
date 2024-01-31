@@ -1,6 +1,18 @@
-import styles from "./Home.module.css";
+import type { MetaFunction } from "@remix-run/cloudflare";
+import styles from "~/styles/_index.module.css";
 
-export default function Home() {
+export const meta: MetaFunction = () => {
+  return [
+    { title: "Nicholas Ferrara - Software Engineer" },
+    {
+      name: "description",
+      content:
+        "A full stack polyglot senior software engineer focusing on process automation based in London, United Kingdom.",
+    },
+  ];
+};
+
+export default function Index() {
   return (
     <div className={styles.container}>
       <h1>Nicholas Ferrara - Software Engineer</h1>
