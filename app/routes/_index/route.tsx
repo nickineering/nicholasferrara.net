@@ -54,6 +54,16 @@ export default function Index() {
         url={"https://leetcode.com/nickineering/"}
         logo={leetcodeLogo}
       />
+      <p>
+        Check out{" "}
+        <a
+          href="/Nicholas_Ferrara_CV_From_Website.pdf"
+          target="_blank"
+          rel="noopener noreferrer"
+        >
+          my CV
+        </a>
+      </p>
       <p>Contact form - Bio - CV - Github projects</p>
     </div>
   );
