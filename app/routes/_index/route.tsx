@@ -1,5 +1,5 @@
 import type { MetaFunction } from "@remix-run/cloudflare";
-import SocialLink from "~/components/links/SocialLink";
+import SocialLink from "~/components/SocialLink";
 import githubLogo from "~/images/github.svg";
 import leetcodeLogo from "~/images/leetcode.svg";
 import linkedinLogo from "~/images/linkedin.png";
@@ -64,7 +64,17 @@ export default function Index() {
           my CV
         </a>
       </p>
-      <p>Contact form - Bio - CV - Github projects</p>
+      <p>
+        How I{" "}
+        <a
+          href="https://github.com/nickineering/setup"
+          target="_blank"
+          rel="noopener noreferrer"
+        >
+          automate my mac
+        </a>
+      </p>
+      <p>Contact form</p>
     </div>
   );
 }
