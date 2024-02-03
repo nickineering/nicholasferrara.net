@@ -49,6 +49,12 @@ module.exports = {
       },
     },
 
+    // JSON
+    {
+      files: ["**/*.json"],
+      extends: ["plugin:jsonc/recommended-with-jsonc"],
+    },
+
     // Typescript
     {
       files: ["**/*.{ts,tsx}"],
