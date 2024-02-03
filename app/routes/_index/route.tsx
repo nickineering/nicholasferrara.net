@@ -1,4 +1,5 @@
 import type { MetaFunction } from "@remix-run/cloudflare";
+import ContactForm from "~/components/ContactForm";
 import SocialLink from "~/components/SocialLink";
 import githubLogo from "~/images/github.svg";
 import leetcodeLogo from "~/images/leetcode.svg";
@@ -74,7 +75,7 @@ export default function Index() {
           automate my mac
         </a>
       </p>
-      <p>Contact form</p>
+      <ContactForm />
     </div>
   );
 }
