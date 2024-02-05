@@ -15,12 +15,6 @@ export default function ContactForm() {
         maxLength={255}
         required
       />
-      <input
-        type="text"
-        name="phone"
-        placeholder="Your phone number (Optional)"
-        maxLength={20}
-      />
       <textarea
         name="message"
         placeholder="Your Message"
