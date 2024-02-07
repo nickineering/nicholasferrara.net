@@ -16,11 +16,13 @@ export default function SocialLink({ alt, name, url, logo }: SocialLinkProps) {
         rel="noreferrer"
         className={styles.socialLink}
       >
-        <img
-          src={logo}
-          className={styles.linkLogo}
-          alt={"Nicholas Ferrara's " + alt}
-        />
+        <div className={styles.socialImageContainer}>
+          <img
+            src={logo}
+            className={styles.linkLogo}
+            alt={"Nicholas Ferrara's " + alt}
+          />
+        </div>
         <span>{name}</span>
       </a>
     </div>
