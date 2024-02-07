@@ -8,26 +8,30 @@ export default function ExternalLinks() {
   return (
     <div>
       <SocialLink
-        name={"Github"}
-        url={"https://github.com/nickineering"}
+        name="Github"
+        alt="Github profile"
+        url="https://github.com/nickineering"
         logo={githubLogo}
       />
       <SocialLink
-        name={"LinkedIn"}
-        url={"https://www.linkedin.com/in/nicholasferrara/"}
+        name="LinkedIn"
+        alt="LinkedIn profile"
+        url="https://www.linkedin.com/in/nicholasferrara/"
         logo={linkedinLogo}
       />
       <SocialLink
-        name={"LeetCode"}
-        url={"https://leetcode.com/nickineering/"}
+        name="LeetCode"
+        alt="LeetCode profile"
+        url="https://leetcode.com/nickineering/"
         logo={leetcodeLogo}
       />
       <SocialLink
-        name={"CV"}
-        url={"/Nicholas_Ferrara_CV_From_Website.pdf"}
+        name="CV"
+        alt="CV"
+        url="/Nicholas_Ferrara_CV_From_Website.pdf"
         logo={cvIcon}
       />
-      <p>I&apos;m based in central London 🇬🇧</p>
+      <p>Based in central London 🇬🇧</p>
     </div>
   );
 }

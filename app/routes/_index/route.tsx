@@ -12,7 +12,7 @@ export const meta: MetaFunction = () => {
     {
       name: "description",
       content:
-        "A full stack polyglot senior software engineer focusing on process automation based in London, United Kingdom.",
+        "A full-stack polyglot senior software engineer focusing on process automation based in London, United Kingdom.",
     },
   ];
 };
@@ -26,7 +26,7 @@ export default function Index() {
         <div>
           <img
             src={profile}
-            alt="Nicholas Ferrara smiling in the sunset"
+            alt="Nick smiling while hiking on a mountain"
             className={styles.profile}
           />
           <ExternalLinks />

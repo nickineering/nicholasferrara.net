@@ -1,6 +1,7 @@
 export default function Faq() {
   return (
     <div>
+      <hr />
       <h2>FAQ</h2>
       <h3>Show us some code!</h3>
       <p>

@@ -49,8 +49,14 @@ body {
 
 p,
 h1,
-h2 {
+h2,
+h3 {
   color: #f6f5f5;
+}
+
+p,
+h3 {
+  margin-bottom: 20px;
 }
 
 .container {
