@@ -21,17 +21,17 @@ export default function Index() {
   return (
     <div className={styles.container}>
       <h1>Nicholas Ferrara - Software Engineer</h1>
-      <div className={styles.flexContainer}>
+      <section className={styles.flexContainer}>
         <Bio />
-        <div>
+        <aside>
           <img
             src={profile}
             alt="Nick smiling while hiking on a mountain"
             className={styles.profile}
           />
           <ExternalLinks />
-        </div>
-      </div>
+        </aside>
+      </section>
       <ContactForm />
       <Faq />
     </div>

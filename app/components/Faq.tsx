@@ -1,7 +1,6 @@
 export default function Faq() {
   return (
-    <div>
-      <hr />
+    <section>
       <h2>FAQ</h2>
       <h3>Show us some code!</h3>
       <p>
@@ -66,6 +65,6 @@ export default function Faq() {
 
       <h3>I&apos;m just getting into tech. Could you help me out?</h3>
       <p>I&apos;d love to share some advice or look over your CV.</p>
-    </div>
+    </section>
   );
 }
