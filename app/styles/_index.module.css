@@ -50,23 +50,28 @@ body {
 p,
 h1,
 h2,
-h3 {
+h3,
+details[role="list"] summary:not([role]) {
   color: #f6f5f5;
 }
 
 p,
+h2,
 h3 {
   margin-bottom: 20px;
+}
+
+ul li {
+  list-style: none;
+}
+
+ul {
+  padding-left: 0;
 }
 
 .container {
   max-width: 1000px;
   margin: 0 auto;
-}
-
-h1,
-h2 {
-  text-align: center;
 }
 
 .flexContainer {
