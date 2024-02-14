@@ -9,10 +9,6 @@ import {
 } from "@remix-run/react";
 
 export const links: LinksFunction = () => [
-  {
-    rel: "stylesheet",
-    href: "https://cdn.jsdelivr.net/npm/@picocss/pico@1/css/pico.min.css",
-  },
   ...(cssBundleHref ? [{ rel: "stylesheet", href: cssBundleHref }] : []),
 ];
 
