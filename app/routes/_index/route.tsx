@@ -19,7 +19,7 @@ export const meta: MetaFunction = () => {
 
 export default function Index() {
   return (
-    <div className={styles.container}>
+    <div className={`${styles.container} container`}>
       <h1>Nicholas Ferrara - Software Engineer</h1>
       <section className={styles.flexContainer}>
         <Bio />

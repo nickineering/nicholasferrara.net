@@ -1,68 +1,12 @@
-/* Start pico theme */
-
-/* Blue Light scheme (Default) */
-/* Can be forced with data-theme="light" */
-[data-theme="light"],
-:root:not([data-theme="dark"]) {
-  --primary: #1e88e5;
-  --primary-hover: #1976d2;
-  --primary-focus: rgba(30, 136, 229, 0.125);
-  --primary-inverse: #fff;
+.container {
+  padding-top: 2rem;
+  padding-bottom: 2rem;
 }
 
-/* Blue Dark scheme (Auto) */
-/* Automatically enabled if user has Dark mode enabled */
-@media only screen and (prefers-color-scheme: dark) {
-  :root:not([data-theme]) {
-    --primary: #1e88e5;
-    --primary-hover: #2196f3;
-    --primary-focus: rgba(30, 136, 229, 0.25);
-    --primary-inverse: #fff;
-  }
-}
-
-/* Blue Dark scheme (Forced) */
-/* Enabled if forced with data-theme="dark" */
-[data-theme="dark"] {
-  --primary: #1e88e5;
-  --primary-hover: #2196f3;
-  --primary-focus: rgba(30, 136, 229, 0.25);
-  --primary-inverse: #fff;
-}
-
-/* Blue (Common styles) */
-:root {
-  --form-element-active-border-color: var(--primary);
-  --form-element-focus-color: var(--primary-focus);
-  --switch-color: var(--primary-inverse);
-  --switch-checked-background-color: var(--primary);
-}
-
-/* End Pico theme */
-
-body {
-  font-family: Tahoma, sans-serif;
-  line-height: 1.8;
-  background-color: #0f0f0f;
-  padding: 20px;
-}
-
-p,
-h1,
-h2,
-h3,
-details[role="list"] summary:not([role]) {
-  color: #f6f5f5;
-}
-
-p,
-h2,
-h3 {
-  margin-bottom: 20px;
-}
-
-p {
-  line-height: 32px;
+.flexContainer {
+  display: flex;
+  align-items: start;
+  justify-content: space-between;
 }
 
 ul li {
@@ -71,17 +15,6 @@ ul li {
 
 ul {
   padding-left: 0;
-}
-
-.container {
-  max-width: 900px;
-  margin: 0 auto;
-}
-
-.flexContainer {
-  display: flex;
-  align-items: start;
-  justify-content: space-between;
 }
 
 .bio {
