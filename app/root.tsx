@@ -11,7 +11,7 @@ import {
 export const links: LinksFunction = () => [
   {
     rel: "stylesheet",
-    href: "https://cdn.jsdelivr.net/npm/@picocss/pico@2/css/pico.min.css",
+    href: "https://cdn.jsdelivr.net/npm/@picocss/pico@2/css/pico.red.min.css",
   },
   ...(cssBundleHref ? [{ rel: "stylesheet", href: cssBundleHref }] : []),
 ];
