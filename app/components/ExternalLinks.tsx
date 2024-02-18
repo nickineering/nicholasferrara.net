@@ -31,7 +31,7 @@ export default function ExternalLinks() {
         url="/Nicholas_Ferrara_CV_From_Website.pdf"
         logo={cvIcon}
       />
-      <p>Based in central London 🇬🇧</p>
+      <article>Based in central London 🇬🇧</article>
     </div>
   );
 }
