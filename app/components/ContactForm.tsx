@@ -3,20 +3,22 @@ export default function ContactForm() {
     <section>
       <h2>Contact me</h2>
       <form data-static-form-name="contact">
-        <input
-          type="text"
-          name="name"
-          placeholder="Your Name"
-          maxLength={100}
-          required
-        />
-        <input
-          type="email"
-          name="email"
-          placeholder="Your Email"
-          maxLength={255}
-          required
-        />
+        <fieldset className="grid">
+          <input
+            type="text"
+            name="name"
+            placeholder="Your Name"
+            maxLength={100}
+            required
+          />
+          <input
+            type="email"
+            name="email"
+            placeholder="Your Email"
+            maxLength={255}
+            required
+          />
+        </fieldset>
         <textarea
           name="message"
           placeholder="Your Message"
