@@ -28,7 +28,7 @@ export default function ExternalLinks() {
       <SocialLink
         name="CV"
         alt="CV"
-        url="/Nicholas_Ferrara_CV_From_Website.pdf"
+        url="https://docs.google.com/document/d/1JNP756D_xrkBCdV_2j_fS5Fyc_6QiTWHyZ3R18YxEiQ/"
         logo={cvIcon}
       />
       <article>Based in central London 🇬🇧</article>
