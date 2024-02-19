@@ -23,7 +23,7 @@ export default function Index() {
       <h1>Nicholas Ferrara - Software Engineer</h1>
       <section className={styles.flexContainer}>
         <Bio />
-        <aside>
+        <aside className={styles.imageAndLinks}>
           <img
             src={profile}
             alt="Nick smiling while hiking on a mountain"

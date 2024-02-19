@@ -1,6 +1,8 @@
+import styles from "~/styles/_index.module.css";
+
 export default function Bio() {
   return (
-    <div>
+    <div className={styles.bio}>
       <p>Hey, I&apos;m Nick 👋</p>
       <p>
         Ever since I was a teenager I&apos;ve been fascinated by code.

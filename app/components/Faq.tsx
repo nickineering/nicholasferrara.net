@@ -1,3 +1,5 @@
+import "~/styles/faq.module.css";
+
 export default function Faq() {
   return (
     <section>
