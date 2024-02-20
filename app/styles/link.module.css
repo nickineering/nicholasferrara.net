@@ -10,7 +10,6 @@
   font-weight: bold;
   font-size: 1.2rem;
   padding: 10px;
-  border-radius: 5px;
   text-decoration: none;
 }
 
@@ -25,7 +24,7 @@
 
 .socialLinkContainer {
   background-color: #fff;
-  border-radius: 10px;
+  border-radius: var(--pico-border-radius);
   margin-top: 10px;
   margin-bottom: 10px;
   transition: transform 0.3s ease-in-out;
