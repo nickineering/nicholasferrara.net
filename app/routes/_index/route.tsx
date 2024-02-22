@@ -3,6 +3,7 @@ import Bio from "~/components/Bio";
 import ContactForm from "~/components/ContactForm";
 import ExternalLinks from "~/components/ExternalLinks";
 import Faq from "~/components/Faq";
+import Footer from "~/components/Footer";
 import profile from "~/images/profile.jpg";
 import styles from "~/styles/_index.module.css";
 
@@ -34,6 +35,7 @@ export default function Index() {
       </section>
       <ContactForm />
       <Faq />
+      <Footer />
     </div>
   );
 }
