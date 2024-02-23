@@ -11,12 +11,14 @@ export default function Bio() {
         me to software engineering and keeps me going today.
       </p>
       <p>
-        I like to avoid work for work&apos;s sake, and instead focus on the work
-        that makes a difference. The best way to do that is to find force
-        multipliers, and engineering has many of those. I enjoy mentoring and
-        collaborating with other engineers, pushing the limits of what is
-        possible to automate, or better yet staying close to the product so I
-        can quickly realise when code does not have to be written at all.
+        I pride myself in my product engineering mindset and thrive in
+        cross-functional teams with collective ownership of their work. I am a
+        strong advocate of lean practices and am not satisfied until I&apos;ve
+        made an even bigger impact than yesterday. The best way to do that is to
+        find force multipliers, and engineering has many of those. I enjoy
+        mentoring and collaborating with other engineers, pushing the limits of
+        what is possible to automate, or better yet staying close to the product
+        so I can quickly realise when code does not have to be written at all.
       </p>
       <p>
         It&apos;s great to meet like minded people, so if you&apos;ve made it
