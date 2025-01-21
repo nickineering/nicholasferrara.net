@@ -14,7 +14,7 @@
     "@cloudflare/pages-plugin-mailchannels": "^0.1.2",
     "@remix-run/cloudflare": "^2.5.1",
     "@remix-run/cloudflare-pages": "^2.5.1",
-    "@remix-run/css-bundle": "^2.5.1",
+    "@remix-run/css-bundle": "^2.15.2",
     "@remix-run/react": "^2.5.1",
     "isbot": "^4.1.0",
     "react": "^18.2.0",
