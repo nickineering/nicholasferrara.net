@@ -6,6 +6,6 @@
 version: 2
 updates:
   - package-ecosystem: "npm"
-    directory: "package.json"
+    directory: "/"
     schedule:
       interval: "weekly"
