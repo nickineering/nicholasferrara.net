@@ -11,7 +11,7 @@
     "typecheck": "tsc"
   },
   "dependencies": {
-    "@cloudflare/pages-plugin-mailchannels": "^0.1.2",
+    "@cloudflare/pages-plugin-mailchannels": "^0.1.5",
     "@remix-run/cloudflare": "^2.5.1",
     "@remix-run/cloudflare-pages": "^2.5.1",
     "@remix-run/css-bundle": "^2.15.2",
