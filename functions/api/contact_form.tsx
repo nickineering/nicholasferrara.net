@@ -1,18 +1,32 @@
-import { ActionFunction } from "@remix-run/cloudflare";
+import { EventContext } from "@cloudflare/workers-types";
 import { Resend } from "resend";
-import { ContactEmailTemplate } from "../emails/contact";
+import { ContactEmailTemplate } from "../../app/emails/contact";
 
-export const action: ActionFunction = async ({ request, context }) => {
-  const formData = await request.formData();
+interface PagesEnv {
+  RESEND_API_KEY: string;
+}
+
+const headers = { "Content-Type": "application/json;charset=utf-8" };
+
+export async function onRequestPost(
+  context: EventContext<PagesEnv, any, any>,
+  testWithFakeEmail = false
+): Promise<Response> {
+  const formData = await context.request.formData();
   const name = formData.get("name");
   const email = formData.get("email");
   const message = formData.get("message");
 
-  const resend = new Resend((context as any).env.RESEND_API_KEY);
+  const resend = new Resend(context.env.RESEND_API_KEY);
+
+  let to = ["Nicholas Ferrara <hire@nicholasferrara.net>"];
+  if (testWithFakeEmail) {
+    to = ["Always Delivers <delivered@resend.dev>"];
+  }
 
   const { error } = await resend.emails.send({
     from: "Nick's Website <no-reply@nicholasferrara.net>",
-    to: ["Nicholas Ferrara <hire@nicholasferrara.net>"],
+    to,
     replyTo: `${name} <${email}>`,
     subject: `Message from ${name}`,
     react: (
@@ -32,7 +46,7 @@ export const action: ActionFunction = async ({ request, context }) => {
         error,
       }),
       {
-        headers: { "Content-Type": "application/json" },
+        headers,
         status: 500,
       }
     );
@@ -44,8 +58,6 @@ export const action: ActionFunction = async ({ request, context }) => {
       message:
         "Thanks for getting in touch! I'll take a look at your message as soon as possible.",
     }),
-    {
-      headers: { "Content-Type": "application/json" },
-    }
+    { headers }
   );
-};
+}

@@ -12,17 +12,15 @@ import {
 } from "@react-email/components";
 import * as React from "react";
 
-interface EmailTemplateProps {
-  name?: string;
-  email?: string;
-  message?: string;
+export interface ContactProps {
+  name: string;
+  email: string;
+  message: string;
 }
 
-export const ContactEmailTemplate: React.FC<Readonly<EmailTemplateProps>> = ({
-  name,
-  email,
-  message,
-}) => {
+export const ContactEmailTemplate: React.FC<
+  Readonly<Partial<ContactProps>>
+> = ({ name, email, message }) => {
   const formattedMessage = message ?? "";
   const shortMessage =
     formattedMessage.length > 100
