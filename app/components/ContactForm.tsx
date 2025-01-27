@@ -2,7 +2,7 @@ export default function ContactForm() {
   return (
     <section>
       <h2>Contact me</h2>
-      <form data-static-form-name="contact">
+      <form method="post" action="/submit_contact_form">
         <fieldset className="grid">
           <input
             type="text"
