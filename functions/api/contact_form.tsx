@@ -8,9 +8,11 @@ interface PagesEnv {
 
 const headers = { "Content-Type": "application/json;charset=utf-8" };
 
+const isDev = process.env.NODE_ENV === "development";
+
 export async function onRequestPost(
   context: EventContext<PagesEnv, any, any>,
-  testWithFakeEmail = false
+  testWithFakeEmail = isDev
 ): Promise<Response> {
   const formData = await context.request.formData();
   const name = formData.get("name");
