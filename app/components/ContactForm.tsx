@@ -1,4 +1,13 @@
-export default function ContactForm() {
+import { Turnstile } from "@marsidev/react-turnstile";
+import styles from "~/styles/_index.module.css";
+
+interface ContactFormProps {
+  TURNSTILE_SITE_KEY_PUBLIC: string;
+}
+
+export const ContactForm: React.FC<ContactFormProps> = (
+  props: ContactFormProps
+) => {
   return (
     <section>
       <h2>Contact me</h2>
@@ -25,9 +34,12 @@ export default function ContactForm() {
           rows={5}
           required
         ></textarea>
+        <div className={styles.turnstileContainer}>
+          <Turnstile siteKey={props.TURNSTILE_SITE_KEY_PUBLIC} />
+        </div>
         <button type="submit">Send</button>
       </form>
       <hr />
     </section>
   );
-}
+};

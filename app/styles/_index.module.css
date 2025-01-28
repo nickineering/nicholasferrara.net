@@ -27,3 +27,12 @@ footer {
   text-align: center;
   margin-top: 2rem;
 }
+
+form button {
+  margin-top: 1rem;
+}
+
+.turnstileContainer {
+  height: 65px;
+  display: block;
+}

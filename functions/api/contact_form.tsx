@@ -1,10 +1,8 @@
 import { EventContext } from "@cloudflare/workers-types";
 import { Resend } from "resend";
+import { PagesEnv } from "~/types/PagesEnv";
+import { checkTurnstileForm } from "~/util/checkTurnstileForm";
 import { ContactEmailTemplate } from "../../app/emails/contact";
-
-interface PagesEnv {
-  RESEND_API_KEY: string;
-}
 
 const headers = { "Content-Type": "application/json;charset=utf-8" };
 
@@ -15,6 +13,25 @@ export async function onRequestPost(
   testWithFakeEmail = isDev
 ): Promise<Response> {
   const formData = await context.request.formData();
+
+  const turnstileOutcome = await checkTurnstileForm(formData, context);
+  if (!turnstileOutcome.success) {
+    return new Response(
+      JSON.stringify({
+        success: false,
+        message:
+          "The system thinks you are a bot, but it might have made a mistake. " +
+          "Please refresh the page and try again. Alternatively, you can contact me on LinkedIn. " +
+          "I am sorry for the inconvenience.",
+        turnstileOutcome,
+      }),
+      {
+        headers,
+        status: 400,
+      }
+    );
+  }
+
   const name = formData.get("name");
   const email = formData.get("email");
   const message = formData.get("message");
