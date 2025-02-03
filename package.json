@@ -24,7 +24,7 @@
     "resend": "^4.1.1"
   },
   "devDependencies": {
-    "@cloudflare/workers-types": "^4.20250124.3",
+    "@cloudflare/workers-types": "^4.20250129.0",
     "@remix-run/dev": "^2.5.1",
     "@types/react": "^18.2.20",
     "@types/react-dom": "^18.2.7",
