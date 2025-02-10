@@ -49,11 +49,7 @@ export async function onRequestPost(
     replyTo: `${name} <${email}>`,
     subject: `Message from ${name}`,
     react: (
-      <ContactEmailTemplate
-        name={name as string}
-        email={email as string}
-        message={message as string}
-      />
+      <ContactEmailTemplate name={name!} email={email!} message={message!} />
     ),
   });
 
