@@ -1,13 +1,4 @@
-# This workflow uses actions that are not certified by GitHub.
-# They are provided by a third-party and are governed by
-# separate terms of service, privacy policy, and support
-# documentation.
-# ESLint is a tool for identifying and reporting on patterns
-# found in ECMAScript/JavaScript code.
-# More details at https://github.com/eslint/eslint
-# and https://eslint.org
-
-name: ESLint
+name: Lint
 
 on:
   push:
@@ -18,7 +9,7 @@ on:
 
 jobs:
   lint:
-    name: Run eslint scanning
+    name: Run ci
     runs-on: ubuntu-latest
     permissions:
       contents: read
@@ -46,3 +37,9 @@ jobs:
         with:
           sarif_file: eslint-results.sarif
           wait-for-processing: true
+
+      - name: Check formatting with Prettier
+        run: npx prettier --check .
+
+      - name: Check types with Typescript
+        run: npx tsc --noEmit
