@@ -8,6 +8,7 @@ if (process.env.NODE_ENV === "development") {
 
 export const onRequest = createPagesFunctionHandler({
   build,
+  // eslint-disable-next-line @typescript-eslint/no-deprecated
   getLoadContext: (context) => ({ env: context.env }),
   mode: build.mode,
 });

@@ -21,7 +21,7 @@ export const meta: MetaFunction = () => {
   ];
 };
 
-export const loader = async ({ context }: LoaderFunctionArgs) => {
+export const loader = ({ context }: LoaderFunctionArgs) => {
   return {
     TURNSTILE_SITE_KEY_PUBLIC: (context.env as PagesEnv)
       .TURNSTILE_SITE_KEY_PUBLIC,

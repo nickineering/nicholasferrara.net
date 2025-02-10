@@ -4,6 +4,8 @@ import { PagesEnv } from "~/types/PagesEnv";
 import { checkTurnstileForm } from "~/util/checkTurnstileForm";
 import { ContactEmailTemplate } from "../../app/emails/contact";
 
+/* eslint-disable @typescript-eslint/no-unsafe-assignment, @typescript-eslint/no-unsafe-member-access */
+
 const headers = { "Content-Type": "application/json;charset=utf-8" };
 
 const isDev = process.env.NODE_ENV === "development";
@@ -36,6 +38,19 @@ export async function onRequestPost(
   const email = formData.get("email");
   const message = formData.get("message");
 
+  if (!name || !email || !message) {
+    return new Response(
+      JSON.stringify({
+        success: false,
+        message: "`name`, `email`, and `message` are required in request.",
+      }),
+      {
+        headers,
+        status: 500,
+      }
+    );
+  }
+
   const resend = new Resend(context.env.RESEND_API_KEY);
 
   let to = ["Nicholas Ferrara <hire@nicholasferrara.net>"];
@@ -48,9 +63,7 @@ export async function onRequestPost(
     to,
     replyTo: `${name} <${email}>`,
     subject: `Message from ${name}`,
-    react: (
-      <ContactEmailTemplate name={name!} email={email!} message={message!} />
-    ),
+    react: <ContactEmailTemplate name={name} email={email} message={message} />,
   });
 
   if (error) {
