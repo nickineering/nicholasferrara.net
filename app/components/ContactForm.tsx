@@ -6,7 +6,7 @@ interface ContactFormProps {
 }
 
 export const ContactForm: React.FC<ContactFormProps> = (
-  props: ContactFormProps
+  props: ContactFormProps,
 ) => {
   return (
     <section>

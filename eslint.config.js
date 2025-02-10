@@ -1,5 +1,6 @@
 import { includeIgnoreFile } from "@eslint/compat";
 import eslint from "@eslint/js";
+import eslintConfigPrettier from "eslint-config-prettier";
 import eslintPluginImport from "eslint-plugin-import";
 import eslintPluginJsonc from "eslint-plugin-jsonc";
 import eslintPluginJsxA11y from "eslint-plugin-jsx-a11y";
@@ -81,5 +82,6 @@ export default tseslint.config(
     rules: {
       "jsonc/no-comments": "off",
     },
-  }
+  },
+  eslintConfigPrettier,
 );

@@ -12,7 +12,7 @@ const isDev = process.env.NODE_ENV === "development";
 
 export async function onRequestPost(
   context: EventContext<PagesEnv, any, any>,
-  testWithFakeEmail = isDev
+  testWithFakeEmail = isDev,
 ): Promise<Response> {
   const formData = await context.request.formData();
 
@@ -30,7 +30,7 @@ export async function onRequestPost(
       {
         headers,
         status: 400,
-      }
+      },
     );
   }
 
@@ -47,7 +47,7 @@ export async function onRequestPost(
       {
         headers,
         status: 500,
-      }
+      },
     );
   }
 
@@ -76,7 +76,7 @@ export async function onRequestPost(
       {
         headers,
         status: 500,
-      }
+      },
     );
   }
 
@@ -86,6 +86,6 @@ export async function onRequestPost(
       message:
         "Thanks for getting in touch! I'll take a look at your message as soon as possible.",
     }),
-    { headers }
+    { headers },
   );
 }

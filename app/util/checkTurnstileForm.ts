@@ -6,7 +6,7 @@ import { PagesEnv } from "~/types/PagesEnv";
 
 export const checkTurnstileForm = async (
   formData: CloudFlareFormData,
-  context: EventContext<PagesEnv, any, any>
+  context: EventContext<PagesEnv, any, any>,
 ): Promise<any> => {
   const token = formData.get("cf-turnstile-response");
   const ip = context.request.headers.get("CF-Connecting-IP");
@@ -28,7 +28,7 @@ export const checkTurnstileForm = async (
     {
       body: verifyFormData,
       method: "POST",
-    }
+    },
   );
 
   const outcome = await result.json();
