@@ -12,6 +12,7 @@ import {
 } from "@remix-run/react";
 import { useEffect } from "react";
 import * as gtag from "~/util/gtags.client";
+import { PagesEnv } from "./types/PagesEnv";
 
 export const links: LinksFunction = () => [
   {
@@ -21,7 +22,9 @@ export const links: LinksFunction = () => [
   ...(cssBundleHref ? [{ rel: "stylesheet", href: cssBundleHref }] : []),
 ];
 
-export const loader = async ({ context }: LoaderFunctionArgs) => {
+export const loader = ({
+  context,
+}: LoaderFunctionArgs & { context: { env: PagesEnv } }) => {
   return { gaTrackingId: context.env.GA_TRACKING_ID };
 };
 
@@ -30,7 +33,8 @@ export default function App() {
   const { gaTrackingId } = useLoaderData<typeof loader>();
 
   useEffect(() => {
-    if (gaTrackingId?.length) {
+    if (gaTrackingId.length) {
+      // eslint-disable-next-line @typescript-eslint/no-unsafe-call, @typescript-eslint/no-unsafe-member-access
       gtag.pageview(location.pathname, gaTrackingId);
     }
   }, [location, gaTrackingId]);
