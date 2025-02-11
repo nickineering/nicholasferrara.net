@@ -8,10 +8,8 @@ import {
   Scripts,
   ScrollRestoration,
   useLoaderData,
-  useLocation,
 } from "@remix-run/react";
-import { useEffect } from "react";
-import * as gtag from "~/util/gtags.client";
+import GoogleAnalytics from "./components/GoogleAnalytics";
 import { PagesEnv } from "./types/PagesEnv";
 
 export const links: LinksFunction = () => [
@@ -29,15 +27,7 @@ export const loader = ({
 };
 
 export default function App() {
-  const location = useLocation();
   const { gaTrackingId } = useLoaderData<typeof loader>();
-
-  useEffect(() => {
-    if (gaTrackingId.length) {
-      // eslint-disable-next-line @typescript-eslint/no-unsafe-call, @typescript-eslint/no-unsafe-member-access
-      gtag.pageview(location.pathname, gaTrackingId);
-    }
-  }, [location, gaTrackingId]);
 
   return (
     <html lang="en" data-theme="dark">
@@ -45,36 +35,10 @@ export default function App() {
         <meta charSet="utf-8" />
         <meta name="viewport" content="width=device-width, initial-scale=1" />
         <Meta />
-        <script
-          async
-          src="https://www.googletagmanager.com/gtag/js?id=G-GHZKXT99NT"
-        ></script>
         <Links />
       </head>
       <body>
-        {process.env.NODE_ENV === "development" || !gaTrackingId ? null : (
-          <>
-            <script
-              async
-              src={`https://www.googletagmanager.com/gtag/js?id=${gaTrackingId}`}
-            />
-            <script
-              async
-              id="gtag-init"
-              dangerouslySetInnerHTML={{
-                __html: `
-                window.dataLayer = window.dataLayer || [];
-                function gtag(){dataLayer.push(arguments);}
-                gtag('js', new Date());
-
-                gtag('config', '${gaTrackingId}', {
-                  page_path: window.location.pathname,
-                });
-              `,
-              }}
-            />
-          </>
-        )}
+        <GoogleAnalytics gaTrackingId={gaTrackingId} />
         <Outlet />
         <ScrollRestoration />
         <Scripts />
