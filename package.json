@@ -24,7 +24,7 @@
     "resend": "^4.1.2"
   },
   "devDependencies": {
-    "@cloudflare/workers-types": "^4.20250204.0",
+    "@cloudflare/workers-types": "^4.20250321.0",
     "@eslint/compat": "^1.2.6",
     "@eslint/js": "^9.20.0",
     "@remix-run/dev": "^2.15.3",
