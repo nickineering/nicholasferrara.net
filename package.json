@@ -12,7 +12,7 @@
   },
   "dependencies": {
     "@marsidev/react-turnstile": "^1.1.0",
-    "@react-email/components": "^0.0.32",
+    "@react-email/components": "^0.0.39",
     "@remix-run/cloudflare": "^2.5.1",
     "@remix-run/cloudflare-pages": "^2.15.3",
     "@remix-run/css-bundle": "^2.15.3",
