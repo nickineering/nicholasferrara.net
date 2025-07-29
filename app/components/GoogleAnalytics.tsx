@@ -17,7 +17,11 @@ export default function GoogleAnalytics({
     }
   }, [location, gaTrackingId]);
 
-  if (process.env.NODE_ENV === "development" || !gaTrackingId) {
+  const params = new URLSearchParams(location.search);
+  const isDisabled = params.has("disableAnalytics");
+
+  if (process.env.NODE_ENV === "development" || !gaTrackingId || isDisabled) {
+    console.warn("Analytics are disabled");
     return null;
   }
 
