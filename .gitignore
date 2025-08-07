@@ -8,3 +8,6 @@ node_modules
 /public/build
 .dev.vars
 .wrangler
+
+# CI generated files
+eslint-results.sarif
