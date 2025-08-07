@@ -1,5 +1,6 @@
 import { useLocation } from "@remix-run/react";
-import { useEffect } from "react";
+import { useEffect, useState } from "react";
+import { ClientOnly } from "~/components/ClientOnly";
 import * as gtag from "~/util/gtags.client";
 
 interface GoogleAnalyticsProps {
@@ -9,18 +10,29 @@ interface GoogleAnalyticsProps {
 export default function GoogleAnalytics({
   gaTrackingId,
 }: GoogleAnalyticsProps) {
+  return (
+    <ClientOnly>
+      <GoogleAnalyticsClient gaTrackingId={gaTrackingId} />
+    </ClientOnly>
+  );
+}
+
+function GoogleAnalyticsClient({ gaTrackingId }: GoogleAnalyticsProps) {
   const location = useLocation();
+  const [isDisabled, setIsDisabled] = useState(false);
 
   useEffect(() => {
-    if (gaTrackingId) {
+    const params = new URLSearchParams(location.search);
+    setIsDisabled(params.has("disableAnalytics"));
+  }, [location.search]);
+
+  useEffect(() => {
+    if (gaTrackingId && !isDisabled) {
       gtag.pageview(location.pathname, gaTrackingId);
     }
-  }, [location, gaTrackingId]);
+  }, [location, gaTrackingId, isDisabled]);
 
-  const params = new URLSearchParams(location.search);
-  const isDisabled = params.has("disableAnalytics");
-
-  if (process.env.NODE_ENV === "development" || !gaTrackingId || isDisabled) {
+  if (!gaTrackingId || isDisabled) {
     console.warn("Analytics are disabled");
     return null;
   }

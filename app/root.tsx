@@ -9,6 +9,7 @@ import {
   ScrollRestoration,
   useLoaderData,
 } from "@remix-run/react";
+import { ClientOnly } from "./components/ClientOnly";
 import GoogleAnalytics from "./components/GoogleAnalytics";
 import { PagesEnv } from "./types/PagesEnv";
 
@@ -42,7 +43,9 @@ export default function App() {
         <Outlet />
         <ScrollRestoration />
         <Scripts />
-        <LiveReload />
+        <ClientOnly>
+          <LiveReload />
+        </ClientOnly>
       </body>
     </html>
   );

@@ -1,4 +1,5 @@
 import { Turnstile } from "@marsidev/react-turnstile";
+import { ClientOnly } from "~/components/ClientOnly";
 import styles from "~/styles/_index.module.css";
 
 interface ContactFormProps {
@@ -35,7 +36,11 @@ export const ContactForm: React.FC<ContactFormProps> = (
           required
         ></textarea>
         <div className={styles.turnstileContainer}>
-          <Turnstile siteKey={props.TURNSTILE_SITE_KEY_PUBLIC} />
+          <ClientOnly>
+            {props.TURNSTILE_SITE_KEY_PUBLIC && (
+              <Turnstile siteKey={props.TURNSTILE_SITE_KEY_PUBLIC} />
+            )}
+          </ClientOnly>
         </div>
         <button type="submit">Send</button>
       </form>
