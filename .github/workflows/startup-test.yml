@@ -122,76 +122,7 @@ jobs:
         uses: actions/upload-artifact@v4
         if: always()
         with:
-          name: visual-test-results-${{ github.run_number }}
-          path: temp-screenshots/
-          retention-days: 30
-
-      - name: Stop server
-        if: always()
-        run: |
-          if [ -f server.pid ]; then
-            kill $(cat server.pid) 2>/dev/null || true
-            rm server.pid
-          fi
-
-      - name: Download baseline from repository
-        run: |
-          mkdir -p baseline-screenshots
-
-          if curl -f -s -H "Authorization: token ${{ secrets.GITHUB_TOKEN }}" \
-                 -H "Accept: application/vnd.github.v3.raw" \
-                 "https://api.github.com/repos/${{ github.repository }}/contents/visual-baselines/homepage-baseline.png?ref=main" \
-                 -o baseline-screenshots/homepage-baseline.png; then
-            echo "✅ Downloaded baseline"
-          else
-            echo "ℹ️ No baseline found - treating as initial run"
-            touch baseline-screenshots/.no-baseline
-          fi
-
-      - name: Run visual regression test
-        run: |
-          # Take screenshot using our CI script
-          node -e "
-          const { chromium } = require('playwright');
-          const fs = require('fs');
-
-          (async () => {
-            const browser = await chromium.launch();
-            const page = await browser.newPage();
-
-            try {
-              await page.setViewportSize({ width: 1280, height: 720 });
-              await page.goto('http://localhost:8788/', {
-                waitUntil: 'domcontentloaded',
-                timeout: 60000
-              });
-              await page.waitForTimeout(3000);
-
-              if (!fs.existsSync('temp-screenshots')) {
-                fs.mkdirSync('temp-screenshots');
-              }
-
-              await page.screenshot({
-                path: 'temp-screenshots/homepage-current.png',
-                fullPage: true
-              });
-
-              console.log('✅ Screenshot captured');
-
-            } finally {
-              await browser.close();
-            }
-          })();
-          "
-
-      - name: Compare with baseline
-        run: node scripts/ci-visual-compare.js
-
-      - name: Upload visual test results
-        uses: actions/upload-artifact@v4
-        if: always()
-        with:
-          name: visual-test-results-${{ github.run_number }}
+          name: visual-test-results-${{ github.run_id }}-${{ github.run_attempt }}
           path: temp-screenshots/
           retention-days: 30
 
