@@ -1,0 +1,114 @@
+{
+    "version": "0.2.0",
+    "configurations": [
+        {
+            "name": "Launch Remix Dev Server",
+            "type": "node",
+            "request": "launch",
+            "program": "${workspaceFolder}/node_modules/@remix-run/dev/dist/cli.js",
+            "args": [
+                "dev",
+                "--manual",
+                "-c",
+                "npm run start"
+            ],
+            "console": "integratedTerminal",
+            "env": {
+                "NODE_ENV": "development"
+            },
+            "cwd": "${workspaceFolder}",
+            "restart": true,
+            "stopOnEntry": false,
+            "sourceMaps": true,
+            "skipFiles": [
+                "<node_internals>/**"
+            ],
+            "outFiles": [
+                "${workspaceFolder}/build/**/*.js",
+                "${workspaceFolder}/public/build/**/*.js"
+            ]
+        },
+        {
+            "name": "Launch Wrangler Pages Dev",
+            "type": "node",
+            "request": "launch",
+            "program": "${workspaceFolder}/node_modules/wrangler/bin/wrangler.js",
+            "args": [
+                "pages",
+                "dev",
+                "./public"
+            ],
+            "console": "integratedTerminal",
+            "env": {
+                "NODE_ENV": "development"
+            },
+            "cwd": "${workspaceFolder}",
+            "restart": true,
+            "stopOnEntry": false,
+            "sourceMaps": true,
+            "skipFiles": [
+                "<node_internals>/**"
+            ]
+        },
+        {
+            "name": "Debug Remix Build",
+            "type": "node",
+            "request": "launch",
+            "program": "${workspaceFolder}/node_modules/@remix-run/dev/dist/cli.js",
+            "args": [
+                "build"
+            ],
+            "console": "integratedTerminal",
+            "env": {
+                "NODE_ENV": "production"
+            },
+            "cwd": "${workspaceFolder}",
+            "stopOnEntry": false,
+            "sourceMaps": true,
+            "skipFiles": [
+                "<node_internals>/**"
+            ],
+            "outFiles": [
+                "${workspaceFolder}/build/**/*.js",
+                "${workspaceFolder}/functions/**/*.js"
+            ]
+        },
+        {
+            "name": "Attach to Node Process",
+            "type": "node",
+            "request": "attach",
+            "port": 9229,
+            "restart": true,
+            "localRoot": "${workspaceFolder}",
+            "remoteRoot": "${workspaceFolder}",
+            "sourceMaps": true,
+            "skipFiles": [
+                "<node_internals>/**"
+            ]
+        },
+        {
+            "name": "Debug TypeScript Compilation",
+            "type": "node",
+            "request": "launch",
+            "program": "${workspaceFolder}/node_modules/typescript/bin/tsc",
+            "args": [
+                "--noEmit"
+            ],
+            "console": "integratedTerminal",
+            "cwd": "${workspaceFolder}",
+            "stopOnEntry": false,
+            "skipFiles": [
+                "<node_internals>/**"
+            ]
+        }
+    ],
+    "compounds": [
+        {
+            "name": "Launch Full Dev Environment",
+            "configurations": [
+                "Launch Remix Dev Server"
+            ],
+            "stopAll": true
+        }
+    ]
+}
