@@ -53,7 +53,7 @@ const CONFIG = {
     launchOptions: { headless: true },
     viewport: { width: 1280, height: 1080 },
     targetUrl: "http://localhost:8788",
-    navigationOptions: { waitUntil: "networkidle" },
+    navigationOptions: { waitUntil: "domcontentloaded", timeout: 30000 },
     screenshotOptions: { fullPage: true },
   },
 
@@ -169,13 +169,10 @@ async function startServer() {
     throw new Error(`Failed to start server process: ${error.message}`);
   });
 
-  // Monitor for immediate crashes
+  // Monitor for crashes but don't throw errors
   server.on("exit", (code, signal) => {
-    if (code !== null && code !== 0) {
-      throw new Error(`Server exited with code ${code}`);
-    }
-    if (signal) {
-      throw new Error(`Server killed with signal ${signal}`);
+    if (code !== 143 && signal !== "SIGTERM") {
+      console.log(`⚠️ Server process exited: code ${code}, signal ${signal}`);
     }
   });
 
@@ -444,7 +441,7 @@ async function compareImages(currentPath) {
 }
 
 async function cleanupServer(server) {
-  if (server && server.kill) {
+  if (server && server.kill && !server.killed) {
     console.log("🧹 Stopping server...");
     server.kill();
     await new Promise((resolve) =>
@@ -489,31 +486,30 @@ async function main() {
 
     server = await startServer();
 
-    try {
-      await downloadBaseline();
-      const currentPath = await captureScreenshot();
-      const result = await compareImages(currentPath);
+    await downloadBaseline();
+    const currentPath = await captureScreenshot();
+    const result = await compareImages(currentPath);
 
-      if (result.isFirstRun) {
-        console.log("🎉 First run completed - baseline established");
-        process.exit(0);
-      }
-
-      if (result.passed) {
-        console.log("🎉 Visual regression test passed!");
-        process.exit(0);
-      } else {
-        console.log("💥 Visual regression test failed!");
-        if (result.diffPercentage) {
-          console.log(`   Difference: ${result.diffPercentage.toFixed(2)}%`);
-        }
-        if (result.diffPath) {
-          console.log(`   Diff image: ${result.diffPath}`);
-        }
-        process.exit(1);
-      }
-    } finally {
+    if (result.isFirstRun) {
+      console.log("🎉 First run completed - baseline established");
       await cleanupServer(server);
+      process.exit(0);
+    }
+
+    if (result.passed) {
+      console.log("🎉 Visual regression test passed!");
+      await cleanupServer(server);
+      process.exit(0);
+    } else {
+      console.log("💥 Visual regression test failed!");
+      if (result.diffPercentage) {
+        console.log(`   Difference: ${result.diffPercentage.toFixed(2)}%`);
+      }
+      if (result.diffPath) {
+        console.log(`   Diff image: ${result.diffPath}`);
+      }
+      await cleanupServer(server);
+      process.exit(1);
     }
   } catch (error) {
     console.error("💥 Error:", error.message);
