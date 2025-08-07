@@ -12,14 +12,17 @@ async function waitForServer(url, maxAttempts = 30) {
     try {
       const response = await fetch(url);
       if (response.ok) {
+        console.log("✅ Server is ready!");
+        // Give it a bit more time to stabilize
+        await new Promise((resolve) => setTimeout(resolve, 3000));
         return true;
       }
     } catch {
-      // Continue trying
+      // Server not ready yet
     }
 
     console.log(`Waiting for server... (${i + 1}/${maxAttempts})`);
-    await new Promise((resolve) => setTimeout(resolve, 2000));
+    await new Promise((resolve) => setTimeout(resolve, 3000));
   }
 
   return false;
@@ -33,8 +36,15 @@ async function captureBaseline() {
 
   try {
     await page.setViewportSize({ width: 1280, height: 720 });
-    await page.goto("http://localhost:8788/", { waitUntil: "networkidle" });
-    await page.waitForTimeout(2000);
+
+    // Use a more lenient loading strategy
+    await page.goto("http://localhost:8788/", {
+      waitUntil: "domcontentloaded",
+      timeout: 60000,
+    });
+
+    // Wait for page to stabilize
+    await page.waitForTimeout(5000);
 
     if (!fs.existsSync("visual-baselines")) {
       fs.mkdirSync("visual-baselines");
@@ -54,7 +64,13 @@ async function captureBaseline() {
 async function main() {
   // Start server
   console.log("🚀 Starting server...");
-  const server = spawn("npm", ["run", "start"], { stdio: "pipe" });
+  const server = spawn("npm", ["run", "start"], {
+    stdio: ["ignore", "pipe", "pipe"],
+    detached: false,
+  });
+
+  // Give server time to start
+  await new Promise((resolve) => setTimeout(resolve, 5000));
 
   try {
     // Wait for server
@@ -72,7 +88,9 @@ async function main() {
       '   git add visual-baselines/ && git commit -m "Update visual baseline"',
     );
   } finally {
-    server.kill();
+    console.log("🛑 Shutting down server...");
+    server.kill("SIGTERM");
+    await new Promise((resolve) => setTimeout(resolve, 2000));
   }
 }
 
