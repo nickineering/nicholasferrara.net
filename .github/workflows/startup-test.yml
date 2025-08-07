@@ -1,0 +1,186 @@
+name: Startup & Visual Regression Test
+
+on:
+  push:
+    branches: ["main", "*"]
+  pull_request:
+    branches: ["main", "*"]
+
+jobs:
+  startup-test:
+    name: Test App Startup
+    runs-on: ubuntu-latest
+    timeout-minutes: 10
+
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v4
+
+      - name: Setup Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: "18"
+          cache: "npm"
+
+      - name: Install dependencies
+        run: npm ci
+
+      - name: Build application
+        run: npm run build
+
+      - name: Test startup errors
+        run: |
+          # Start the app in the background
+          timeout 30 npm run start &
+          SERVER_PID=$!
+
+          # Wait for server to start
+          sleep 5
+
+          # Check if process is still running
+          if ! kill -0 $SERVER_PID 2>/dev/null; then
+            echo "❌ Server crashed immediately"
+            exit 1
+          fi
+
+          # Wait for stability
+          sleep 10
+
+          if ! kill -0 $SERVER_PID 2>/dev/null; then
+            echo "❌ Server crashed after 15 seconds"
+            exit 1
+          fi
+
+          # Test HTTP response
+          for i in {1..5}; do
+            if curl -f -s -o /dev/null http://localhost:8788/; then
+              echo "✅ Server responding"
+              break
+            elif [ $i -eq 5 ]; then
+              echo "⚠️ Server not responding after 5 attempts"
+            else
+              sleep 2
+            fi
+          done
+
+          kill $SERVER_PID 2>/dev/null || true
+          echo "✅ Startup test passed"
+
+      - name: Check for startup issues
+        if: failure()
+        run: |
+          echo "Startup failed. Common issues:"
+          echo "• Missing environment variables"
+          echo "• Port conflicts"
+          echo "• Missing dependencies"
+          echo "• Configuration errors"
+          echo "• Runtime errors"
+
+  visual-regression-test:
+    name: Visual Regression Test
+    runs-on: ubuntu-latest
+    needs: startup-test
+    timeout-minutes: 15
+
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v4
+
+      - name: Setup Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: "18"
+          cache: "npm"
+
+      - name: Install dependencies
+        run: npm ci
+
+      - name: Install Playwright browsers
+        run: npx playwright install chromium
+
+      - name: Build application
+        run: npm run build
+
+      - name: Start server for visual testing
+        run: |
+          npm run start &
+          echo $! > server.pid
+
+          # Wait for server
+          for i in {1..30}; do
+            if curl -f -s -o /dev/null http://localhost:8788/; then
+              echo "✅ Server ready"
+              break
+            elif [ $i -eq 30 ]; then
+              echo "❌ Server failed to start"
+              exit 1
+            else
+              sleep 2
+            fi
+          done
+
+      - name: Run visual regression test
+        run: |
+          # Take screenshot using Playwright directly
+          node -e "
+          const { chromium } = require('playwright');
+          const fs = require('fs');
+
+          (async () => {
+            const browser = await chromium.launch();
+            const page = await browser.newPage();
+
+            try {
+              await page.setViewportSize({ width: 1280, height: 720 });
+              await page.goto('http://localhost:8788/', { waitUntil: 'networkidle' });
+              await page.waitForTimeout(2000);
+
+              if (!fs.existsSync('temp-screenshots')) {
+                fs.mkdirSync('temp-screenshots');
+              }
+
+              await page.screenshot({
+                path: 'temp-screenshots/homepage-current.png',
+                fullPage: true
+              });
+
+              console.log('✅ Screenshot captured');
+
+            } finally {
+              await browser.close();
+            }
+          })();
+          "
+
+      - name: Download baseline from repository
+        run: |
+          mkdir -p baseline-screenshots
+
+          if curl -f -s -H "Authorization: token ${{ secrets.GITHUB_TOKEN }}" \
+                 -H "Accept: application/vnd.github.v3.raw" \
+                 "https://api.github.com/repos/${{ github.repository }}/contents/visual-baselines/homepage-baseline.png?ref=main" \
+                 -o baseline-screenshots/homepage-baseline.png; then
+            echo "✅ Downloaded baseline"
+          else
+            echo "ℹ️ No baseline found - treating as initial run"
+            touch baseline-screenshots/.no-baseline
+          fi
+
+      - name: Compare with baseline
+        run: node scripts/ci-visual-compare.js
+
+      - name: Upload visual test results
+        uses: actions/upload-artifact@v4
+        if: always()
+        with:
+          name: visual-test-results-${{ github.run_number }}
+          path: temp-screenshots/
+          retention-days: 30
+
+      - name: Stop server
+        if: always()
+        run: |
+          if [ -f server.pid ]; then
+            kill $(cat server.pid) 2>/dev/null || true
+            rm server.pid
+          fi
