@@ -1,32 +1,27 @@
-# Visual Baselines
+# Visual Test Baselines
 
-This directory contains baseline screenshots used for visual regression testing.
+This directory contains reference screenshots used for visual regression
+testing.
 
-## Files
+## 📸 Current Baselines
 
-- `homepage-baseline.png` - Baseline screenshot of the homepage
+- `homepage-baseline.png` - Reference image for homepage appearance
 
-## Usage
+## 🔄 Updating Baselines
 
-To update the visual baselines after making intentional visual changes:
-
-```bash
-npm run update-visual-baseline
-```
-
-This will:
-
-1. Build the application
-2. Start the server
-3. Capture new screenshots
-4. Save them as baselines
-
-After running the command, commit the updated baseline files:
+When you make intentional visual changes:
 
 ```bash
+# Update the reference images
+npm run vis:update
+
+# Commit the changes
 git add visual-baselines/
-git commit -m "Update visual baseline"
-git push
+git commit -m "Update visual baseline after design changes"
 ```
 
-The GitHub Actions workflow will then use these baselines for comparison.
+## ⚠️ Important
+
+- **These files are tracked in git** - they represent the "correct" appearance
+- **Don't edit manually** - always use the npm script to update
+- **Review carefully** - these become the new standard for comparison
