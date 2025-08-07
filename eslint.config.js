@@ -51,6 +51,7 @@ export default tseslint.config(
       ...eslintPluginImport.configs.recommended.rules,
       ...eslintPluginImport.configs.typescript.rules,
       "@typescript-eslint/no-explicit-any": "off",
+      "@typescript-eslint/no-non-null-assertion": "off",
     },
     settings: {
       react: {
