@@ -5,7 +5,13 @@ testing.
 
 ## 📸 Current Baselines
 
-- `homepage-baseline.png` - Reference image for homepage appearance
+- `homepage-baseline.png` - Reference image for homepage appearance (tracked in
+  git)
+
+## 🗂️ Temporary Files (Not Tracked)
+
+- `homepage-current.png` - Current screenshot during testing
+- `homepage-diff.png` - Difference visualization when tests fail
 
 ## 🔄 Updating Baselines
 
