@@ -8,7 +8,7 @@ import Faq from "~/components/Faq";
 import Footer from "~/components/Footer";
 import profile from "~/images/profile.jpg";
 import styles from "~/styles/_index.module.css";
-import { PagesEnv } from "~/types/PagesEnv";
+import { Env } from "~/types/Env";
 
 export const meta: MetaFunction = () => {
   return [
@@ -23,8 +23,7 @@ export const meta: MetaFunction = () => {
 
 export const loader = ({ context }: LoaderFunctionArgs) => {
   return {
-    TURNSTILE_SITE_KEY_PUBLIC: (context.env as PagesEnv)
-      .TURNSTILE_SITE_KEY_PUBLIC,
+    TURNSTILE_SITE_KEY_PUBLIC: (context.env as Env).TURNSTILE_SITE_KEY_PUBLIC,
   };
 };
 
