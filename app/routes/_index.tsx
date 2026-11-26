@@ -21,9 +21,14 @@ export const meta: MetaFunction = () => {
   ];
 };
 
-export const loader = ({ context }: LoaderFunctionArgs) => {
+export const loader = ({ context, request }: LoaderFunctionArgs) => {
+  // Set by the contact form redirect when JavaScript is unavailable.
+  const contact = new URL(request.url).searchParams.get("contact");
+  const contactStatus: "success" | "error" | undefined =
+    contact === "success" || contact === "error" ? contact : undefined;
   return {
     TURNSTILE_SITE_KEY_PUBLIC: (context.env as Env).TURNSTILE_SITE_KEY_PUBLIC,
+    contactStatus,
   };
 };
 
@@ -44,7 +49,10 @@ export default function Index() {
           <ExternalLinks />
         </aside>
       </section>
-      <ContactForm TURNSTILE_SITE_KEY_PUBLIC={data.TURNSTILE_SITE_KEY_PUBLIC} />
+      <ContactForm
+        TURNSTILE_SITE_KEY_PUBLIC={data.TURNSTILE_SITE_KEY_PUBLIC}
+        initialStatus={data.contactStatus}
+      />
       <Faq />
       <Footer />
     </div>

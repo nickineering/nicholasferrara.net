@@ -7,6 +7,26 @@ import { ContactEmailTemplate } from "~/emails/contact";
 
 const headers = { "Content-Type": "application/json;charset=utf-8" };
 
+/**
+ * Fetch requests from the page ask for JSON and render the result inline.
+ * Plain HTML form posts (JavaScript disabled or not yet loaded) get redirected
+ * back to the contact section with a status flag instead of raw JSON.
+ */
+function respond(
+  request: Request,
+  body: { success: boolean; message: string; [key: string]: unknown },
+  status = 200,
+): Response {
+  const wantsJson = request.headers.get("Accept")?.includes("application/json");
+  if (!wantsJson) {
+    const url = new URL("/", request.url);
+    url.searchParams.set("contact", body.success ? "success" : "error");
+    url.hash = "contact";
+    return Response.redirect(url.toString(), 303);
+  }
+  return new Response(JSON.stringify(body), { headers, status });
+}
+
 const isDev = process.env.NODE_ENV === "development";
 
 export async function handleContactForm(
@@ -18,19 +38,17 @@ export async function handleContactForm(
 
   const turnstileOutcome = await checkTurnstileForm(formData, request, env);
   if (!turnstileOutcome.success) {
-    return new Response(
-      JSON.stringify({
+    return respond(
+      request,
+      {
         success: false,
         message:
           "The system thinks you are a bot, but it might have made a mistake. " +
           "Please refresh the page and try again. Alternatively, you can contact me on LinkedIn. " +
           "I am sorry for the inconvenience.",
         turnstileOutcome,
-      }),
-      {
-        headers,
-        status: 400,
       },
+      400,
     );
   }
 
@@ -43,15 +61,13 @@ export async function handleContactForm(
   const message = field("message");
 
   if (!name || !email || !message) {
-    return new Response(
-      JSON.stringify({
-        success: false,
-        message: "`name`, `email`, and `message` are required in request.",
-      }),
+    return respond(
+      request,
       {
-        headers,
-        status: 500,
+        success: false,
+        message: "Please fill in your name, email and message.",
       },
+      400,
     );
   }
 
@@ -71,25 +87,20 @@ export async function handleContactForm(
   });
 
   if (error) {
-    return new Response(
-      JSON.stringify({
+    return respond(
+      request,
+      {
         success: false,
         message: "There was a problem sending your message.",
         error,
-      }),
-      {
-        headers,
-        status: 500,
       },
+      500,
     );
   }
 
-  return new Response(
-    JSON.stringify({
-      success: true,
-      message:
-        "Thanks for getting in touch! I'll take a look at your message as soon as possible.",
-    }),
-    { headers },
-  );
+  return respond(request, {
+    success: true,
+    message:
+      "Thanks for getting in touch! I'll take a look at your message as soon as possible.",
+  });
 }
