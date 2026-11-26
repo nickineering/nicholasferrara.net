@@ -9,7 +9,7 @@ on:
 jobs:
   test:
     name: Startup & Visual Test
-    runs-on: ubuntu-latest
+    runs-on: ubuntu-24.04 # Playwright 1.54 has no Chromium build for ubuntu-latest (26.04)
     timeout-minutes: 10
     env:
       CI: true
@@ -21,7 +21,7 @@ jobs:
       - name: Setup Node.js
         uses: actions/setup-node@v4
         with:
-          node-version: "18"
+          node-version-file: ".node-version"
           cache: "npm"
 
       - name: Install dependencies

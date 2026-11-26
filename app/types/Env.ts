@@ -1,4 +1,4 @@
-export interface PagesEnv {
+export interface Env {
   GA_TRACKING_ID: string;
   RESEND_API_KEY: string;
   TURNSTILE_SECRET_KEY: string;

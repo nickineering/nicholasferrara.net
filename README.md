@@ -1,7 +1,7 @@
 # Nicholas Ferrara's Personal Website
 
 Personal portfolio and contact site built with Remix and deployed on Cloudflare
-Pages. The main branch is deployed to
+Workers. The main branch is deployed to
 [nicholasferrara.net](https://nicholasferrara.net).
 
 ## Quick Setup
@@ -18,7 +18,8 @@ Visit [localhost:8788](http://localhost:8788)
 ## Tech Stack
 
 - **Remix** - Full-stack React framework with server-side rendering
-- **Cloudflare Pages** - Global CDN hosting with edge functions
+- **Cloudflare Workers** - Server-side rendering at the edge, with static assets
+  served by Workers static assets
 - **TypeScript** - Type safety and better developer experience
 - **Resend** - Email API for contact form
 
@@ -43,8 +44,10 @@ cp .dev-example.vars .dev.vars
 
 ## Deployment
 
-- **Main branch** → Auto-deploys to production via GitHub Actions
-- **Pull requests** → Automatic preview deployments
+- **Main branch** → Auto-deploys to production via Cloudflare Workers Builds
+  (`npm run build`, then `npx wrangler deploy`)
+- **Other branches** → Preview versions with their own preview URL
+- Manual deploy: `npm run deploy`
 
 ## Contributing
 

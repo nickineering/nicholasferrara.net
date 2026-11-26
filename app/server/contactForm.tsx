@@ -1,8 +1,7 @@
-import { EventContext } from "@cloudflare/workers-types";
 import { Resend } from "resend";
-import { PagesEnv } from "~/types/PagesEnv";
+import { Env } from "~/types/Env";
 import { checkTurnstileForm } from "~/util/checkTurnstileForm";
-import { ContactEmailTemplate } from "../../app/emails/contact";
+import { ContactEmailTemplate } from "~/emails/contact";
 
 /* eslint-disable @typescript-eslint/no-unsafe-assignment, @typescript-eslint/no-unsafe-member-access */
 
@@ -10,13 +9,14 @@ const headers = { "Content-Type": "application/json;charset=utf-8" };
 
 const isDev = process.env.NODE_ENV === "development";
 
-export async function onRequestPost(
-  context: EventContext<PagesEnv, any, any>,
+export async function handleContactForm(
+  request: Request,
+  env: Env,
   testWithFakeEmail = isDev,
 ): Promise<Response> {
-  const formData = await context.request.formData();
+  const formData = await request.formData();
 
-  const turnstileOutcome = await checkTurnstileForm(formData, context);
+  const turnstileOutcome = await checkTurnstileForm(formData, request, env);
   if (!turnstileOutcome.success) {
     return new Response(
       JSON.stringify({
@@ -34,9 +34,13 @@ export async function onRequestPost(
     );
   }
 
-  const name = formData.get("name");
-  const email = formData.get("email");
-  const message = formData.get("message");
+  const field = (key: string) => {
+    const value = formData.get(key);
+    return typeof value === "string" ? value.trim() : "";
+  };
+  const name = field("name");
+  const email = field("email");
+  const message = field("message");
 
   if (!name || !email || !message) {
     return new Response(
@@ -51,7 +55,7 @@ export async function onRequestPost(
     );
   }
 
-  const resend = new Resend(context.env.RESEND_API_KEY);
+  const resend = new Resend(env.RESEND_API_KEY);
 
   let to = ["Nicholas Ferrara <hire@nicholasferrara.net>"];
   if (testWithFakeEmail) {

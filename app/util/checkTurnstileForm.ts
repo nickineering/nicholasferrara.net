@@ -1,20 +1,17 @@
-import {
-  FormData as CloudFlareFormData,
-  EventContext,
-} from "@cloudflare/workers-types";
-import { PagesEnv } from "~/types/PagesEnv";
+import { Env } from "~/types/Env";
 
 export const checkTurnstileForm = async (
-  formData: CloudFlareFormData,
-  context: EventContext<PagesEnv, any, any>,
+  formData: FormData,
+  request: Request,
+  env: Env,
 ): Promise<any> => {
   const token = formData.get("cf-turnstile-response");
   const ip =
-    context.request.headers.get("CF-Connecting-IP") ??
-    context.request.headers.get("x-forwarded-for");
+    request.headers.get("CF-Connecting-IP") ??
+    request.headers.get("x-forwarded-for");
 
   let message = "";
-  if (!context.env.TURNSTILE_SECRET_KEY) {
+  if (!env.TURNSTILE_SECRET_KEY) {
     message = "No turnstile secret key configured";
   }
   if (!token) {
@@ -29,8 +26,8 @@ export const checkTurnstileForm = async (
   }
 
   const verifyFormData = new FormData();
-  verifyFormData.append("secret", context.env.TURNSTILE_SECRET_KEY);
-  verifyFormData.append("response", token!);
+  verifyFormData.append("secret", env.TURNSTILE_SECRET_KEY);
+  verifyFormData.append("response", token as string);
   verifyFormData.append("remoteip", ip!);
 
   try {
