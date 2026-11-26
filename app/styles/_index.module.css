@@ -36,3 +36,56 @@ form button {
   height: 65px;
   display: block;
 }
+
+.thankYou {
+  display: flex;
+  gap: 1.25rem;
+  align-items: flex-start;
+  border-left: 4px solid var(--pico-ins-color);
+  animation: fadeIn 300ms ease-out;
+}
+
+.thankYou h3 {
+  margin-bottom: 0.5rem;
+}
+
+.thankYou button {
+  margin-top: 0;
+}
+
+.thankYouIcon {
+  flex: 0 0 auto;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 2.5rem;
+  height: 2.5rem;
+  border-radius: 50%;
+  background: var(--pico-ins-color);
+  color: var(--pico-background-color);
+  font-size: 1.25rem;
+  font-weight: bold;
+}
+
+.formError {
+  border-left: 4px solid var(--pico-del-color);
+  animation: fadeIn 300ms ease-out;
+}
+
+@keyframes fadeIn {
+  from {
+    opacity: 0;
+    transform: translateY(-4px);
+  }
+  to {
+    opacity: 1;
+    transform: none;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .thankYou,
+  .formError {
+    animation: none;
+  }
+}
